@@ -1,5 +1,6 @@
 from typing import Optional
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -20,6 +21,13 @@ class TasksOrm(Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     description: Mapped[Optional[str]]
+
+class SubtasksOrm(Model):
+    __tablename__ = 'subtasks'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    task_id: Mapped[int] = mapped_column(ForeignKey('tasks.id'))
+    description: Mapped[str]
 
 async def create_tables():
     async with engine.begin() as conn:

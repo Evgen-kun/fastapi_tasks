@@ -8,7 +8,18 @@ class STaskAdd(BaseModel):
     description: Optional[str] = None
 
 
+class SSubtaskAdd(BaseModel):
+    task_id: int
+    description: str
+
+
 class STask(STaskAdd):
+    id: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class SSubtask(SSubtaskAdd):
     id: int
 
     model_config = ConfigDict(from_attributes=True)
@@ -17,3 +28,8 @@ class STask(STaskAdd):
 class STaskId(BaseModel):
     ok: bool = True
     task_id: int
+
+
+class SSubtaskId(BaseModel):
+    ok: bool = True
+    subtask_id: int
